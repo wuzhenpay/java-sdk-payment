@@ -20,7 +20,8 @@ WuzhenpayClient.init("1000000001", "51def6637bb3fcc11ca20cceb21c26f5");
 ``` 
   PayRequest payRequest = new PayRequest().setAuthCode("1346725671562342924")
                                                 .setOutTradeNo(System.currentTimeMillis() + "")
-                                                .setTitle("test");
+                                                .setTitle("test")
+                                                .setPayMoney(1);
   HttpResult<PayResp> pay = WuzhenpayClient.pay(payRequest);
   System.out.println(JSON.toJSONString(pay));
 ``` 
@@ -78,15 +79,15 @@ WuzhenpayClient.init("1000000001", "51def6637bb3fcc11ca20cceb21c26f5");
  > 该接口主要用于**用户被扫**收款不明确的情况或者需要取消交易的情况，可以调用该接口。调用支付接口后请勿立即调用撤销订单接口，建议至少15s后再调用撤销订单接口。
  ``` 
   CloseReverseRequest closeReverseRequest = new CloseReverseRequest().setOutTradeNo("1543629639934");
-  HttpResult<CloseReverseResp> refundQuery = WuzhenpayClient.reverse(closeReverseRequest);
-  System.out.println(JSON.toJSONString(refundQuery));
+  HttpResult<CloseReverseResp> reverse = WuzhenpayClient.reverse(closeReverseRequest);
+  System.out.println(JSON.toJSONString(reverse));
  ``` 
  ### 关闭订单 (WuzhenpayClient::close)
  > 该接口主要用于**用户主扫** **js支付**收款不明确的情况或者需要取消交易的情况，商户订单支付失败需要生成新单号重新发起支付，要对原订单号调用关单，避免重复支付；系统下单后，用户支付超时，系统退出不再受理，避免用户继续，请调用关单接口。
  ``` 
    CloseReverseRequest closeReverseRequest = new CloseReverseRequest().setOutTradeNo("1543629639934");
-   HttpResult<CloseReverseResp> refundQuery = WuzhenpayClient.close(closeReverseRequest);
-   System.out.println(JSON.toJSONString(refundQuery));
+   HttpResult<CloseReverseResp> close = WuzhenpayClient.close(closeReverseRequest);
+   System.out.println(JSON.toJSONString(close));
  ``` 
  
  
