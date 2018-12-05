@@ -10,6 +10,9 @@
 ## 使用方法
 ``` 
 WuzhenpayClient.init("1000000001", "51def6637bb3fcc11ca20cceb21c26f5");
+//开启调试模式，默认关闭
+WuzhenpayClient.setDebugMode(true);
+
 ```
 
 ### 交易支付（WuzhenpayClient::pay）
