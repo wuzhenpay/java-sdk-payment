@@ -68,7 +68,7 @@ public class WuzhenpayClient
         Map<String, String> map = JSON.parseObject(data, new TypeReference<Map<String, String>>()
         {
         });
-        String sign = MD5Util.getHSign(map);
+        String sign = MD5Util.getHSign(map,debugMode);
 
         if(debugMode)
         {

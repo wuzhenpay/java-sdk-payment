@@ -30,7 +30,7 @@ public class BaseRequest
     public Map<String,String> createParam()
     {
 
-        String sign =MD5Util.getHSign(param);
+        String sign =MD5Util.getHSign(param,false);
         param.put("sign",sign);
         return param;
     }

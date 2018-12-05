@@ -26,13 +26,11 @@ public class App
         WuzhenpayClient.setDebugMode(true);
 
 //        pay();
-                 query();
-//                 refund();
-        //         refundQuery();
-
-        //close();
-
-        //reverse();
+        query();
+//        refund();
+//        refundQuery();
+//        close();
+//        reverse();
 
     }
 
@@ -41,7 +39,7 @@ public class App
         System.out.println("pay------------------");
         PayRequest payRequest = new PayRequest().setAuthCode("1345016544807777558")
                                                 .setOutTradeNo(System.currentTimeMillis() + "")
-                                                .setTitle("test").setPayMoney(1);
+                                                .setTitle("testsss").setPayMoney(1);
         HttpResult<PayResp> pay = WuzhenpayClient.pay(payRequest);
         System.out.println(JSON.toJSONString(pay));
 
