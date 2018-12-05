@@ -43,6 +43,8 @@ public class WuzhenpayClient
     public static String merchantId;
     public static String secret;
 
+    private static boolean debugMode;
+
 
     public static void init(String merchantId, String secret)
     {
@@ -52,15 +54,27 @@ public class WuzhenpayClient
 
     public static void setDebugMode(boolean debug)
     {
+        debugMode=debug;
         HttpsUtil.init(debug);
     }
 
     public static boolean checkSign(String data)
     {
+        if(debugMode)
+        {
+            System.out.println("[ 待验签数据 ]");
+            System.out.println(data);
+        }
         Map<String, String> map = JSON.parseObject(data, new TypeReference<Map<String, String>>()
         {
         });
         String sign = MD5Util.getHSign(map);
+
+        if(debugMode)
+        {
+            System.out.println("[ 签名信息 ]");
+            System.out.println(sign);
+        }
         return sign.equals(map.get("sign"));
     }
 

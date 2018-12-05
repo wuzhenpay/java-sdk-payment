@@ -25,8 +25,8 @@ public class App
 
         WuzhenpayClient.setDebugMode(true);
 
-        pay();
-//                 query();
+//        pay();
+                 query();
 //                 refund();
         //         refundQuery();
 
