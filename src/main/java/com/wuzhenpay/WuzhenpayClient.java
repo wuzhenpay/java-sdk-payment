@@ -50,6 +50,11 @@ public class WuzhenpayClient
         WuzhenpayClient.secret = secret;
     }
 
+    public static void setDebugMode(boolean debug)
+    {
+        HttpsUtil.init(debug);
+    }
+
     public static boolean checkSign(String data)
     {
         Map<String, String> map = JSON.parseObject(data, new TypeReference<Map<String, String>>()
@@ -72,13 +77,14 @@ public class WuzhenpayClient
             if (!checkSign(result.data))
             {
                 httpResult.code = HttpsUtil.SIGN_ERROR_CODE;
-                httpResult.message = "签名错误";
+                httpResult.errorMsg = "签名错误";
                 return httpResult;
             }
         }
 
         httpResult.code = result.code;
         httpResult.message = result.message;
+        httpResult.errorMsg = result.errorMsg;
         httpResult.data = JSON.parseObject(result.data, t);
 
         return httpResult;
@@ -86,38 +92,48 @@ public class WuzhenpayClient
 
     public static HttpResult<PayResp> pay(PayRequest request)
     {
-        String s = HttpsUtil.httpPostRequest(baseUrl + payPath, request.createParam());
-        return parseResult(s,PayResp.class);
+        Map<String, String> param = request.createParam();
+        if (param.get("authCode") != null && param.get("payType") == null)
+        {
+            HttpResult<PayResp> httpResult = new HttpResult<>();
+            httpResult.code = HttpsUtil.ERROR_CODE;
+            httpResult.errorMsg = "非法支付条码";
+            return httpResult;
+
+        }
+
+        String s = HttpsUtil.httpPostRequest(baseUrl + payPath, param);
+        return parseResult(s, PayResp.class);
     }
 
     public static HttpResult<QueryResp> query(QueryRequest request)
     {
         String s = HttpsUtil.httpPostRequest(baseUrl + queryPath, request.createParam());
-        return parseResult(s,QueryResp.class);
+        return parseResult(s, QueryResp.class);
     }
 
 
     public static HttpResult<RefundResp> refund(RefundRequest request)
     {
         String s = HttpsUtil.httpPostRequest(baseUrl + refundPath, request.createParam());
-        return parseResult(s,RefundResp.class);
+        return parseResult(s, RefundResp.class);
     }
 
     public static HttpResult<RefundResp> refundQuery(RefundQueryRequest request)
     {
         String s = HttpsUtil.httpPostRequest(baseUrl + refundQueryPath, request.createParam());
-        return parseResult(s,RefundResp.class);
+        return parseResult(s, RefundResp.class);
     }
 
     public static HttpResult<CloseReverseResp> close(CloseReverseRequest request)
     {
         String s = HttpsUtil.httpPostRequest(baseUrl + closePath, request.createParam());
-        return parseResult(s,CloseReverseResp.class);
+        return parseResult(s, CloseReverseResp.class);
     }
 
     public static HttpResult<CloseReverseResp> reverse(CloseReverseRequest request)
     {
         String s = HttpsUtil.httpPostRequest(baseUrl + reversePath, request.createParam());
-        return parseResult(s,CloseReverseResp.class);
+        return parseResult(s, CloseReverseResp.class);
     }
 }

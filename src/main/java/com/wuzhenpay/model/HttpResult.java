@@ -7,5 +7,6 @@ public class HttpResult<T>
 {
     public int code;
     public String message;
+    public String errorMsg;
     public T data;
 }

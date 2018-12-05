@@ -23,6 +23,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 
 /**
  * Author:  aspros
@@ -32,8 +33,8 @@ import okhttp3.Response;
 
 public class HttpsUtil
 {
-    public static final int SIGN_ERROR_CODE=23333;
-    public static final int ERROR_CODE =23334;
+    public static final int SIGN_ERROR_CODE = 23333;
+    public static final int ERROR_CODE = 23334;
 
     public static OkHttpClient client;
 
@@ -41,7 +42,7 @@ public class HttpsUtil
     {
         try
         {
-            client = setSSL();
+            client = setSSL(false);
         }
         catch (Exception e)
         {
@@ -49,7 +50,20 @@ public class HttpsUtil
         }
     }
 
-    private static OkHttpClient setSSL() throws Exception
+    public static void init(boolean debug)
+    {
+        try
+        {
+            client = setSSL(debug);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+
+    private static OkHttpClient setSSL(boolean debug) throws Exception
     {
         final X509TrustManager trustManager = new X509TrustManager()
         {
@@ -77,11 +91,20 @@ public class HttpsUtil
         SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
 
 
+
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
         //设置超时时间
         httpClientBuilder.connectTimeout(10, TimeUnit.SECONDS);
         httpClientBuilder.writeTimeout(10, TimeUnit.SECONDS);
         httpClientBuilder.readTimeout(10, TimeUnit.SECONDS);
+
+
+        if(debug)
+        {
+            HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+            httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            httpClientBuilder.addInterceptor(httpLoggingInterceptor);
+        }
 
         return httpClientBuilder.sslSocketFactory(sslSocketFactory, trustManager)
                                 .hostnameVerifier(new HostnameVerifier()
@@ -192,7 +215,7 @@ public class HttpsUtil
         HttpResult httpResult = new HttpResult();
         httpResult.code = code;
         httpResult.data = null;
-        httpResult.message = message;
+        httpResult.errorMsg = message;
         return JSON.toJSONString(httpResult);
 
     }

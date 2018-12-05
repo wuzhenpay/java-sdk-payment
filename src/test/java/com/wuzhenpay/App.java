@@ -23,10 +23,12 @@ public class App
 
         WuzhenpayClient.init("1000000001", "51def6637bb3fcc11ca20cceb21c26f5");
 
+        WuzhenpayClient.setDebugMode(true);
+
 //        pay();
-//         query();
-//         refund();
-//         refundQuery();
+//                 query();
+                 refund();
+        //         refundQuery();
 
         //close();
 
@@ -37,14 +39,9 @@ public class App
     public static void pay()
     {
         System.out.println("pay------------------");
-        PayRequest payRequest = new PayRequest()
+        PayRequest payRequest = new PayRequest().setAuthCode("134506544807777558")
                                                 .setOutTradeNo(System.currentTimeMillis() + "")
-                                                .setTitle("test")
-                                                .setPayMoney(1)
-                                                .setOpenid("o2ry2jh6syo31iTMYVkA8jU_b1Fc")
-                                                .setSubAppid("wx206cdad0c66cb7ca")
-                                                .setBuyerId("2088402339754365")
-                                                .setAuthCode("134672511156542924");
+                                                .setTitle("test").setPayMoney(1);
         HttpResult<PayResp> pay = WuzhenpayClient.pay(payRequest);
         System.out.println(JSON.toJSONString(pay));
 
@@ -54,7 +51,7 @@ public class App
     public static void query()
     {
         System.out.println("query------------------");
-        QueryRequest queryRequest = new QueryRequest().setPayNo("").setOutTradeNo("1543629639934");
+        QueryRequest queryRequest = new QueryRequest().setPayNo("").setOutTradeNo("1543975331192");
         HttpResult<QueryResp> query = WuzhenpayClient.query(queryRequest);
         System.out.println(JSON.toJSONString(query));
     }
@@ -63,9 +60,9 @@ public class App
     {
         System.out.println("refund------------------");
         RefundRequest refundRequest = new RefundRequest().setPayNo("")
-                                                         .setOutTradeNo("1543631373520")
+                                                         .setOutTradeNo("1543975331192")
                                                          .setOutRefundNo(System.currentTimeMillis() + "")
-                                                         .setRefundFee(1);
+                                                         .setRefundFee(59900);
         HttpResult<RefundResp> refund = WuzhenpayClient.refund(refundRequest);
         System.out.println(JSON.toJSONString(refund));
     }
