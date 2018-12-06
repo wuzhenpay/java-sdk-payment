@@ -11,6 +11,9 @@ import com.wuzhenpay.model.response.CloseReverseResp;
 import com.wuzhenpay.model.response.PayResp;
 import com.wuzhenpay.model.response.QueryResp;
 import com.wuzhenpay.model.response.RefundResp;
+import com.wuzhenpay.utils.MD5Util;
+
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  * Hello world!
@@ -23,21 +26,23 @@ public class App
 
         WuzhenpayClient.init("1000000001", "51def6637bb3fcc11ca20cceb21c26f5");
 
-        WuzhenpayClient.setDebugMode(true);
+//        WuzhenpayClient.setDebugMode(true);
 
-//        pay();
-        query();
+        pay();
+//        query();
 //        refund();
 //        refundQuery();
 //        close();
 //        reverse();
+
+
 
     }
 
     public static void pay()
     {
         System.out.println("pay------------------");
-        PayRequest payRequest = new PayRequest().setAuthCode("1345016544807777558")
+        PayRequest payRequest = new PayRequest().setAuthCode("134622420452901051")
                                                 .setOutTradeNo(System.currentTimeMillis() + "")
                                                 .setTitle("testsss").setPayMoney(1);
         HttpResult<PayResp> pay = WuzhenpayClient.pay(payRequest);
