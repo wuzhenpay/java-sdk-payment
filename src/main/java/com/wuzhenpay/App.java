@@ -12,8 +12,8 @@ import com.wuzhenpay.model.request.WzpRefundRequest;
 public class App
 {
 
-    private static String merchantId = "1000000318";
-    private static String secreat = "e6418e9217acd70b0b831a5859c4e7f2";
+    private static String merchantId = "";
+    private static String secreat = "";
 
     public static void main(String[] args)
     {
