@@ -6,16 +6,16 @@ package com.wuzhenpay.model.request;
  * Contact  519199662@qq.com
  */
 
-public class QueryRequest extends BaseRequest
+public class WzpQueryRequest extends WzpBaseRequest
 {
-    public QueryRequest setOutTradeNo(String outTradeNo)
+    public WzpQueryRequest setOutTradeNo(String outTradeNo)
     {
         param.put("outTradeNo", outTradeNo);
         return this;
     }
 
 
-    public QueryRequest setPayNo(String payNo)
+    public WzpQueryRequest setPayNo(String payNo)
     {
         param.put("payNo", payNo);
         return this;

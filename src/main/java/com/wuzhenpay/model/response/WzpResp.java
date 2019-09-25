@@ -4,18 +4,73 @@ import java.io.Serializable;
 
 /**
  * Author:  aspros
- * Date:  2018/11/30 下午2:22
+ * Date:  2019/3/8 上午10:58
  * Contact  519199662@qq.com
  */
 
-public class BaseResponse implements Serializable
+public class WzpResp implements Serializable
 {
+	private static final long serialVersionUID = 4637248458416046137L;
+
+	private String status;
+
+    private String statusMsg;
+
+    private String payNo;
+
+    private String outTradeNo;
+
     private String merchantId;
+
     private String signType;
+
     private String charset;
+
     private String timestamp;
+
     private String format;
+
     private String sign;
+
+    public String getStatus()
+    {
+        return status;
+    }
+
+    public void setStatus(String status)
+    {
+        this.status = status;
+    }
+
+    public String getStatusMsg()
+    {
+        return statusMsg;
+    }
+
+    public void setStatusMsg(String statusMsg)
+    {
+        this.statusMsg = statusMsg;
+    }
+
+    public String getPayNo()
+    {
+        return payNo;
+    }
+
+    public void setPayNo(String payNo)
+    {
+        this.payNo = payNo;
+    }
+
+    public String getOutTradeNo()
+    {
+        return outTradeNo;
+    }
+
+    public void setOutTradeNo(String outTradeNo)
+    {
+        this.outTradeNo = outTradeNo;
+    }
 
     public String getMerchantId()
     {

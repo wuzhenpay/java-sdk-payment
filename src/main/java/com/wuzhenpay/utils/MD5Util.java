@@ -1,74 +1,48 @@
 package com.wuzhenpay.utils;
 
-
-import com.wuzhenpay.WuzhenpayClient;
+import com.alibaba.fastjson.JSONObject;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.TreeMap;
 
 /**
+ * MD5 散列算法返回的128bit的编码，HEX编码后的长度为32Byte
+ * <p>
  * Created by aspros on 16/4/8.
  */
 public class MD5Util
 {
+    // md5加密salt,硬编码
+    private final static String SALT = "wuzhenpay@wuzhenpay";
 
-    public static String md5Hex(String string)
+    public static String sign(TreeMap<?, ?> map, String secret)
     {
-        return DigestUtils.md5Hex(string).toLowerCase();
-    }
-
-    public static String getHSign(Map<String, String> map, boolean print)
-    {
-        if (map == null || map.size() == 0)
-        {
-            return "";
-        }
-        List<String> list = new ArrayList<>();
-
-        for (String key : map.keySet())
-        {
-            if (map.get(key) == null || map.get(key).length() == 0)
-            {
-                list.add(key);
-            }
-        }
-        for (String key : list)
-        {
-            map.remove(key);
-        }
-        list.clear();
-        for (String key : map.keySet())
+        StringBuilder builder = new StringBuilder();
+        for (Object key : map.keySet())
         {
             if (key.equals("sign"))
             {
                 continue;
             }
-            list.add(key + "=" + map.get(key));
+            Object value = map.get(key);
+            if (null != value && String.valueOf(value).length() != 0)
+            {
+                builder.append(key).append("=").append(value).append("&");
+            }
         }
-        if (list.size() == 0)
-        {
-            return "";
-        }
-        Collections.sort(list);
-        StringBuilder sb = new StringBuilder(list.get(0));
-        for (int i = 1; i < list.size(); i++)
-        {
-            sb.append("&" + list.get(i));
-        }
-        sb.append("&secret=" + WuzhenpayClient.secret);
+        String linkString = builder.toString().concat("secret=").concat(secret);
+        return DigestUtils.md5Hex(linkString);
+    }
 
 
-        String data = sb.toString();
-        if (print)
-        {
-            System.out.println("[ 拼接后数据 ]");
-            System.out.println(data);
-        }
-        return md5Hex(data);
+    public static boolean checkSign(String data, String secret)
+    {
 
+        TreeMap<?, ?> treeMap = JSONObject.parseObject(data, TreeMap.class);
+
+        String sign = MD5Util.sign(treeMap, secret);
+
+        return sign.equals(treeMap.get("sign"));
     }
 }

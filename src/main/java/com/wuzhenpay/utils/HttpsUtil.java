@@ -1,8 +1,5 @@
 package com.wuzhenpay.utils;
 
-import com.alibaba.fastjson.JSON;
-import com.wuzhenpay.model.HttpResult;
-
 import java.io.IOException;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
@@ -42,11 +39,10 @@ public class HttpsUtil
     {
         try
         {
-            client = setSSL(false);
+            client = setSSL(true);
         }
         catch (Exception e)
         {
-            e.printStackTrace();
         }
     }
 
@@ -58,7 +54,6 @@ public class HttpsUtil
         }
         catch (Exception e)
         {
-            e.printStackTrace();
         }
     }
 
@@ -91,7 +86,6 @@ public class HttpsUtil
         SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
 
 
-
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
         //设置超时时间
         httpClientBuilder.connectTimeout(10, TimeUnit.SECONDS);
@@ -99,7 +93,7 @@ public class HttpsUtil
         httpClientBuilder.readTimeout(10, TimeUnit.SECONDS);
 
 
-        if(debug)
+        if (debug)
         {
             HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
             httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -135,7 +129,6 @@ public class HttpsUtil
         }
         catch (IOException e)
         {
-            e.printStackTrace();
             return null;
         }
     }
@@ -212,12 +205,7 @@ public class HttpsUtil
     private static String getErrorResult(int code, String message)
     {
 
-        HttpResult httpResult = new HttpResult();
-        httpResult.code = code;
-        httpResult.data = null;
-        httpResult.errorMsg = message;
-        return JSON.toJSONString(httpResult);
-
+        return null;
     }
 
     private static String getUrl(String url, Map<String, String> params)

@@ -6,9 +6,9 @@ package com.wuzhenpay.model.request;
  * Contact  519199662@qq.com
  */
 
-public class CloseReverseRequest extends BaseRequest
+public class WzpCloseReverseRequest extends WzpBaseRequest
 {
-    public CloseReverseRequest setOutTradeNo(String outTradeNo)
+    public WzpCloseReverseRequest setOutTradeNo(String outTradeNo)
     {
         param.put("outTradeNo", outTradeNo);
         return this;

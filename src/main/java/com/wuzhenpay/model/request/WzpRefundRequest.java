@@ -6,30 +6,36 @@ package com.wuzhenpay.model.request;
  * Contact  519199662@qq.com
  */
 
-public class RefundRequest extends BaseRequest
+public class WzpRefundRequest extends WzpBaseRequest
 {
-    public RefundRequest setOutTradeNo(String outTradeNo)
+    public WzpRefundRequest setOutTradeNo(String outTradeNo)
     {
         param.put("outTradeNo", outTradeNo);
         return this;
     }
 
 
-    public RefundRequest setPayNo(String payNo)
+    public WzpRefundRequest setPayNo(String payNo)
     {
         param.put("payNo", payNo);
         return this;
     }
 
-    public RefundRequest setOutRefundNo(String outRefundNo)
+    public WzpRefundRequest setOutRefundNo(String outRefundNo)
     {
         param.put("outRefundNo", outRefundNo);
         return this;
     }
 
-    public RefundRequest setRefundFee(long refundFee)
+    public WzpRefundRequest setRefundFee(Long refundFee)
     {
         param.put("refundFee", String.valueOf(refundFee));
+        return this;
+    }
+
+    public WzpRefundRequest setReason(String reason)
+    {
+        param.put("reason", reason);
         return this;
     }
 }

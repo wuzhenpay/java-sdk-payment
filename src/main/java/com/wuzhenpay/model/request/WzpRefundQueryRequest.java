@@ -6,10 +6,10 @@ package com.wuzhenpay.model.request;
  * Contact  519199662@qq.com
  */
 
-public class RefundQueryRequest extends BaseRequest
+public class WzpRefundQueryRequest extends WzpBaseRequest
 {
 
-    public RefundQueryRequest setOutRefundNo(String outRefundNo)
+    public WzpRefundQueryRequest setOutRefundNo(String outRefundNo)
     {
         param.put("outRefundNo", outRefundNo);
         return this;
