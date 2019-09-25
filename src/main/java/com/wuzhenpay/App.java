@@ -12,7 +12,14 @@ import com.wuzhenpay.model.request.WzpRefundRequest;
 public class App
 {
 
+    /**
+     * 填写自己的商户id
+     */
     private static String merchantId = "";
+
+    /**
+     * 填写自己的密钥
+     */
     private static String secreat = "";
 
     public static void main(String[] args)
